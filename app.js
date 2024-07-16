@@ -44,7 +44,7 @@ async function fetchData(cityName) {
     img.src = "./images/snow.png";
   }
 }
-
+fetchData("patiala");
 const date = new Date();
 const currentTime = date.toLocaleTimeString();
 dddmmyy.innerText = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
