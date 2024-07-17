@@ -1,5 +1,7 @@
 const url =
   "https://api.openweathermap.org/data/2.5/weather?appid=45ef503e411d31d957dd70b1cf2df88d&units=metric&q=";
+const getTime =
+  "https://api.api-ninjas.com/v1/worldtime?X-Api-Key=OQrlZqUXQ8f89GtRfmRTsw==RvgvwSdK2lT0cjQb";
 
 const inputVal = document.querySelector(".inputVal");
 const searchBtn = document.querySelector(".searchBtn");
@@ -10,24 +12,31 @@ const windSpeed = document.querySelector(".windSpeed");
 const type = document.querySelector(".type");
 const time = document.querySelector(".time");
 const dddmmyy = document.querySelector(".date");
-let img = document.querySelector(".image");
+const img = document.querySelector(".image");
+const day = document.querySelector(".day");
+
+async function date_time(lat, lon) {
+  let response = await fetch(`${getTime}&lat=${lat}&lon=${lon}`);
+  var data = await response.json();
+  dddmmyy.innerText = data.date;
+  time.innerText = `${data.hour}:${data.minute}`;
+  day.innerText = data.day_of_week;
+}
 
 searchBtn.addEventListener("click", () => {
-  console.log(inputVal.value);
   fetchData(inputVal.value);
-  inputVal.value = "";
 });
 
 async function fetchData(cityName) {
-  console.log(url + cityName);
   let response = await fetch(url + cityName);
   var data = await response.json();
-  console.dir(data);
+  date_time(data.coord.lat, data.coord.lon);
   temp.innerText = data.main.temp + "°C";
   city.innerText = data.name;
   humidityVal.innerText = data.main.humidity + "%";
   windSpeed.innerText = data.wind.speed + "km/hr";
   type.innerText = data.weather[0].main;
+  inputVal.value = "";
   if (data.weather[0].main == "Clouds") {
     img.src = "./images/clouds.png";
   } else if (data.weather[0].main == "Clear") {
@@ -45,24 +54,3 @@ async function fetchData(cityName) {
   }
 }
 fetchData("patiala");
-const date = new Date();
-const currentTime = date.toLocaleTimeString();
-dddmmyy.innerText = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-console.dir(date);
-console.log(date.getFullYear());
-
-function updateTime() {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  if (minutes < 10) {
-    minutes = "0" + minutes;
-  }
-  var t_str = hours + ":" + minutes + " ";
-  if (hours > 11) {
-    t_str += "PM";
-  } else {
-    t_str += "AM";
-  }
-  time.innerText = t_str;
-}
-setInterval(updateTime, 1000);
