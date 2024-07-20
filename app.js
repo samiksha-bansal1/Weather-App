@@ -26,6 +26,11 @@ async function date_time(lat, lon) {
 searchBtn.addEventListener("click", () => {
   fetchData(inputVal.value);
 });
+inputVal.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    fetchData(inputVal.value);
+  }
+});
 
 async function fetchData(cityName) {
   let response = await fetch(url + cityName);
