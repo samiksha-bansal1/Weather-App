@@ -1,5 +1,5 @@
-const url =
-  "https://api.openweathermap.org/data/2.5/weather?appid=45ef503e411d31d957dd70b1cf2df88d&units=metric&q=";
+const apiKey = "45ef503e411d31d957dd70b1cf2df88d";
+const url = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&units=metric&q=`;
 const getTime =
   "https://api.api-ninjas.com/v1/worldtime?X-Api-Key=OQrlZqUXQ8f89GtRfmRTsw==RvgvwSdK2lT0cjQb";
 
